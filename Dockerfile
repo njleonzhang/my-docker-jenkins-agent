@@ -30,19 +30,11 @@ RUN npm i -g pnpm
 RUN npm i --global yarn
 
 ##########
-# 工具
+# tools
 ##########
 RUN apt-get install -y ansible
 RUN apt-get install -y lftp
 RUN apt-get install -y git
 RUN apt-get install bzip2
-
-##########
-# mysqldump
-##########
 RUN apt-get install -y default-mysql-client
-
-##########
-# zip
-##########
 RUN apt-get install -y zip
