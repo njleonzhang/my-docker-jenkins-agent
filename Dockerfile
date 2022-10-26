@@ -35,6 +35,7 @@ RUN npm i --global yarn
 RUN apt-get install -y ansible
 RUN apt-get install -y lftp
 RUN apt-get install -y git
+RUN apt-get install bzip2
 
 ##########
 # mysqldump
