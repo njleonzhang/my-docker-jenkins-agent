@@ -1,9 +1,7 @@
-FROM jenkins/ssh-agent:latest
+FROM jenkins/ssh-agent:alpine
 
-##########
-# install curl
-##########
-RUN apt-get update && apt-get install --no-install-recommends -y curl 
+RUN echo -e "http://mirrors.aliyun.com/alpine/v3.6/main\nhttp://mirrors.aliyun.com/alpine/v3.6/community" > /etc/apk/repositories
+RUN apk add curl
 
 ##########
 # Maven
@@ -16,25 +14,12 @@ RUN curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binar
 
 ENV MAVEN_HOME=/usr/share/maven
 
-##########
-# Node.js
-##########
-RUN apt-get install -y ca-certificates
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-
-##########
-# pnpm and yarn
-##########
-RUN npm i -g pnpm
-RUN npm i --global yarn
+RUN mv /usr/glibc-compat/lib/ld-linux-x86-64.so.2 /usr/glibc-compat/lib/ld-linux-x86-64.so
+RUN ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so /usr/glibc-compat/lib/ld-linux-x86-64.so.2
 
 ##########
 # tools
 ##########
-RUN apt-get install -y ansible
-RUN apt-get install -y lftp
-RUN apt-get install -y git
-RUN apt-get install bzip2
-RUN apt-get install -y default-mysql-client
-RUN apt-get install -y zip
+RUN apk add --update ansible lftp git bzip2 zip nodejs nodejs-npm
+RUN npm i -g pnpm
+RUN npm i -g yarn
